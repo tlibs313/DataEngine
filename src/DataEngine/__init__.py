@@ -48,6 +48,7 @@ def connectionGenerator(connectionList: dict = None):
     global alchemyObjects
     global alchemyConnections
     if connectionList is None:
+        load_dotenv("database.env")
         alchemyConnections = json.loads(os.environ["databases"])
         connectionList = alchemyConnections
     for dbs in connectionList.keys():
