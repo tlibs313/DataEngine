@@ -20,17 +20,19 @@ def help():
     print("Interface for creating wrappers for Database Objects")
     print("PgConnectionObject() for postres")
     print("SqlConnectionObject() for SQL server")
-
+    print("MongoConnectionObject() for Mongo")
     print(
         "format for a database connection document which are strings saved in 'database.env':"
     )
     print(
-        '{"$name":{"type":"","database":"","server":"","UN":"","PW":"","trusted":""}}'
+        '{"$name":{"type":"[mssql|postgres|mongo]","database":"","server":"","UN":"","PW":"","trusted":"[yes|no]"}}'
     )
     print(
         "where $name is the contextual name for the connextion, like 'main','data', or 'library'"
     )
-
+    print(
+        "execute connectionStringMaker() to start the connection string builder"
+    )
     print("Active Connection Object Names:")
     print("\r\n".join(alchemyObjects.keys()))
     print("-------")
@@ -46,6 +48,7 @@ def connectionGenerator(connectionList: dict = None):
     global alchemyObjects
     global alchemyConnections
     if connectionList is None:
+        alchemyConnections = json.loads(os.environ["databases"])
         connectionList = alchemyConnections
     for dbs in connectionList.keys():
         server = connectionList[dbs]["server"]
@@ -167,6 +170,8 @@ if _import_dbdotenv:
 else:
     with open("database.env", "w+") as dbf:
         dbf.write("databases = '{}'")
-    raise Exception(
-        "the .env file that stored database connections (database.env) is empty. Please update this file accordingly"
+    print(
+        "the database.env file is empty. Starting the Connection String Maker function:"
     )
+    connectionStringMaker()
+
