@@ -26,3 +26,6 @@ setup(
         "Operating System :: Microsoft :: Windows",
     ],
 )
+
+
+#pip install -U git+https://consumers-checkbook@dev.azure.com/consumers-checkbook/DataEngine/_git/DataEngine@master
