@@ -30,9 +30,15 @@ def help():
     print(
         "where $name is the contextual name for the connextion, like 'main','data', or 'library'"
     )
-    print(
-        "execute connectionStringMaker() to start the connection string builder"
-    )
+    print("")
+    print("DataEngine Command List:")
+    print("intialize() - load connection elements in database.env to connection alchemyObjects{}")
+    print("connectionStringBuilder() create or add new connection strings to database.env(beware storing sensitive passwords...)")
+    print("connectionGenerator() convert alchemyConnections{} strings to  alchemyObjects{}")
+    print("saveConnectionStrings() save all elements in alchemyConnections{} to database.env")
+    print("")
+    print("")
+
     print("Active Connection Object Names:")
     print("\r\n".join(alchemyObjects.keys()))
     print("-------")
@@ -42,6 +48,7 @@ def help():
     print("-------")
     print("active connections objects")
     print(f"alchemyObjects = {alchemyObjects}")
+    print("-------")
 
 
 def connectionGenerator(connectionList: dict = None):
@@ -96,9 +103,10 @@ def saveConnectionStrings():
     s = f"databases = '{cx}'"
     with open("./database.env", "w") as f:
         f.write(s)
+    connectionGenerator()
 
 
-def connectionStringMaker():
+def connectionStringBuilder():
     def validate(question, valid_responses):
         response = ""
         while True:
@@ -155,24 +163,30 @@ def connectionStringMaker():
     print(__conx)
     correct = validate("is this correct? (Y/n)\r\n", ["Y", "n"])
     if correct == "n":
-        connectionStringMaker()
+        connectionStringBuilder()
         return
     alchemyConnections[name] = __conx
     more = validate("Add another?(Y/n)", ["Y", "n"])
     if more == "Y":
-        connectionStringMaker()
+        connectionStringBuilder()
     saveConnectionStrings()
 
 
-_import_dbdotenv = load_dotenv("database.env")
-if _import_dbdotenv:
-    alchemyConnections = json.loads(os.environ["databases"])
-    connectionGenerator()
-else:
-    with open("database.env", "w+") as dbf:
-        dbf.write("databases = '{}'")
-    print(
-        "the database.env file is empty. Starting the Connection String Maker function:"
-    )
-    connectionStringMaker()
+# init.
+# if . env file: load
+# else create .env
+#   run builder
+#   save
+#   init
 
+
+def initialize():
+    if load_dotenv("database.env") == False:
+        print("the database.env file is empty. Starting the Connection String Builder:")
+
+        connectionStringBuilder()
+
+    connectionGenerator()
+
+#begin 
+initialize()
