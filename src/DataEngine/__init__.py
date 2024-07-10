@@ -7,13 +7,22 @@ import sys
 import json
 from dotenv import load_dotenv
 
-from .mssql import SqlConnectionObject
+from .mssql import SqlConnectionObject, getPyodbcDriver
 from .postgres import PgConnectionObject
 from .mongo import MongoConnectionObject
 
 __version__ = _version.get_version()
 alchemyConnections = {}
 alchemyObjects = {}
+
+def checkOdbcDriver():
+    if getPyodbcDriver() == '':
+        print("DataEngine did not find a suitable ODBC driver. " /
+            " Please install the latest ODBC driver from MS" /
+            "https://go.microsoft.com/fwlink/?linkid=2266640")
+    else:
+        print(f"using: {getPyodbcDriver()}")
+
 
 
 def help():
@@ -183,9 +192,9 @@ def connectionStringBuilder():
 def initialize():
     if load_dotenv("database.env") == False:
         print("the database.env file is empty. Starting the Connection String Builder:")
-
+        
         connectionStringBuilder()
-
+    checkOdbcDriver()    
     connectionGenerator()
 
 #begin 

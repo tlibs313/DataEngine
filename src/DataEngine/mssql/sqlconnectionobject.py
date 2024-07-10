@@ -15,11 +15,27 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import scoped_session, sessionmaker
 import pandas as pd
+from pyodbc import drivers
+
+
+def getPyodbcDriver():
+    _prefs = [ 'ODBC Driver 18 for SQL Server','ODBC Driver 17 for SQL Server', 'SQL Server Native Client 11.0', 'SQL Server' ]
+    drvs = drivers()
+    use_driver = ''
+    for pref in _prefs:
+        for drv in drvs:
+            if pref == drv:
+                use_driver = drv
+                break
+        if use_driver != '':
+            break
+    return use_driver
 
 class SqlConnectionObject:
     def __init__(self, **kwargs):
-        _template = "mssql+pyodbc://%s%s/%s?trusted_connection=%s&driver=SQL+Server+Native+Client+11.0"
-        # _template = "mssql+pyodbc://%s%s/%s?trusted_connection=%s&driver=ODBC+Driver+17+for+SQL+Server"
+        _template = "mssql+pyodbc://%s%s/%s?trusted_connection=%s&driver=%s&TrustServerCertificate=yes"
+        # _template = "mssql+pyodbc://%s%s/%s?trusted_connection=%s&driver=SQL+Server+Native+Client+11.0"
+        #_template = "mssql+pyodbc://%s%s/%s?trusted_connection=%s&driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes"
         name = kwargs["name"]
         server = kwargs["server"]
         database = kwargs["database"]
@@ -32,7 +48,7 @@ class SqlConnectionObject:
             else urllib.parse.quote_plus(_un) + ":" + urllib.parse.quote_plus(_pw) + "@"
         )
         # _unpw = urllib.parse.quote_plus(_un) + ":" + urllib.parse.quote_plus(_pw)
-        conx = _template % (_unpw, server, database, _trusted)
+        conx = _template % (_unpw, server, database, _trusted, getPyodbcDriver())
         self.name = name
         self.connection = conx
         self.engine = create_engine(
