@@ -1,1 +1,1 @@
-from .sqlconnectionobject import SqlConnectionObject
+from .sqlconnectionobject import SqlConnectionObject, getPyodbcDriver
