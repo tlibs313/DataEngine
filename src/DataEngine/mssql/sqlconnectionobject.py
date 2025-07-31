@@ -16,7 +16,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import scoped_session, sessionmaker
 import pandas as pd
 from pyodbc import drivers
-
+from .storedprocedure import StoredProcedure
 
 def getPyodbcDriver():
     _prefs = [ 'ODBC Driver 18 for SQL Server','ODBC Driver 17 for SQL Server', 'SQL Server Native Client 11.0', 'SQL Server' ]
