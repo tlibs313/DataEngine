@@ -1,6 +1,6 @@
 from setuptools import setup, find_namespace_packages
 
-VERSION = "2.0.1"
+VERSION = "2.1.1"
 DESCRIPTION = "Class Wrapper for sqlalchemy, pandas and mongo"
 LONG_DESCRIPTION = ""
 install_requires = open("requirements.txt").read().strip().split("\n")
