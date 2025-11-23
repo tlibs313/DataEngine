@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 from .mssql import SqlConnectionObject, getPyodbcDriver
 from .postgres import PgConnectionObject
-from .mongo import MongoConnectionObject
+from .mongo import MongoConnectionObject, MongoResult
 
 __version__ = _version.get_version()
 alchemyConnections = {}

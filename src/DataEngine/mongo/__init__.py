@@ -1,1 +1,1 @@
-from .mongoconnectionobject import MongoConnectionObject
+from .mongoconnectionobject import MongoConnectionObject, MongoResult
