@@ -66,6 +66,8 @@ class SqlConnectionObject:
         un       = kwargs.get("UN")
         pw       = kwargs.get("PW")
         trusted  = kwargs.get("trusted", False)
+        if isinstance(trusted, str):
+            trusted = trusted.strip().lower() == "yes"
 
         odbc = _build_odbc_string(server, database, UN=un, PW=pw, trusted=trusted)
         conx = f"mssql+pyodbc:///?odbc_connect={urllib.parse.quote_plus(odbc)}"
