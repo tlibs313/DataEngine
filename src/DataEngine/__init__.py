@@ -17,9 +17,11 @@ alchemyObjects = {}
 
 def checkOdbcDriver():
     if getPyodbcDriver() == '':
-        print("DataEngine did not find a suitable ODBC driver. " /
-            " Please install the latest ODBC driver from MS" /
-            "https://go.microsoft.com/fwlink/?linkid=2266640")
+        print("""
+            DataEngine did not find a suitable ODBC driver. 
+            Please install the latest ODBC driver from MS
+            https://go.microsoft.com/fwlink/?linkid=2266640
+              """)
     else:
         print(f"using: {getPyodbcDriver()}")
 
@@ -63,10 +65,12 @@ def help():
 def connectionGenerator(connectionList: dict = None):
     global alchemyObjects
     global alchemyConnections
+    
     if connectionList is None:
         load_dotenv("database.env")
         alchemyConnections = json.loads(os.environ["databases"])
         connectionList = alchemyConnections
+    
     for dbs in connectionList.keys():
         server = connectionList[dbs]["server"]
         database = connectionList[dbs]["database"]
@@ -198,4 +202,4 @@ def initialize():
     connectionGenerator()
 
 #begin 
-initialize()
+#initialize()
