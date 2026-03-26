@@ -65,6 +65,12 @@ class TestBuildOdbcString:
         assert "UID=" not in result
         assert "PWD=" not in result
 
+    def test_empty_string_credentials_treated_as_absent(self, mock_odbc_drivers):
+        # .env always yields strings — empty UN/PW should fall through to AAD Integrated
+        result = _build_odbc_string("srv", "db", UN="", PW="")
+        assert "Authentication=ActiveDirectoryIntegrated;" in result
+        assert "UID=" not in result
+
     def test_driver_is_included(self, mock_odbc_drivers):
         result = _build_odbc_string("srv", "db", trusted=True)
         assert f"DRIVER={{{_DRIVER_18}}}" in result

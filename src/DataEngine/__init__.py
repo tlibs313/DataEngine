@@ -195,11 +195,11 @@ def connectionStringBuilder():
 
 def initialize():
     if load_dotenv("database.env") == False:
-        print("the database.env file is empty. Starting the Connection String Builder:")
-        
-        connectionStringBuilder()
+        print("the database.env file is empty. Import the DataEngine package then execute connectionStringBuilder()")
+        return
+        #connectionStringBuilder()
     checkOdbcDriver()    
     connectionGenerator()
 
 #begin 
-#initialize()
+initialize()

@@ -49,11 +49,11 @@ def _build_odbc_string(server: str, database: str, UN: str | None = None, PW: st
     if trusted:
         return base + "Trusted_Connection=yes;"
 
-    if UN is not None and PW is not None:
+    if UN and PW:
         return base + f"UID={UN};PWD={PW};"
 
-    if UN is not None:
-        return base + f"Authentication=ActiveDirectoryInteractive;UID={UN};"
+    if UN:
+        return base + f"UID={UN};Authentication=ActiveDirectoryInteractive;"
 
     return base + "Authentication=ActiveDirectoryIntegrated;"
 
