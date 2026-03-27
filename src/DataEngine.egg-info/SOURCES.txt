@@ -10,5 +10,6 @@ src/DataEngine/mongo/__init__.py
 src/DataEngine/mongo/mongoconnectionobject.py
 src/DataEngine/mssql/__init__.py
 src/DataEngine/mssql/sqlconnectionobject.py
+src/DataEngine/mssql/storedprocedure.py
 src/DataEngine/postgres/__init__.py
 src/DataEngine/postgres/pgconnectionobject.py

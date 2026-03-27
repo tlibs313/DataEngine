@@ -1,0 +1,22 @@
+# Virtual environment
+Lib/
+Include/
+Scripts/
+pyvenv.cfg
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build & distribution
+dist/
+build/
+*.egg-info/
+
+# Test cache
+.pytest_cache/
+
+# Secrets
+*.env
